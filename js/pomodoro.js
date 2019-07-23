@@ -51,7 +51,7 @@ $(document).ready(function() {
       return;
     }
 
-    let minutes, seconds;
+    let minutes, seconds, indicatorbar;
 
     minutes = parseInt(duration/60, 10);
     seconds = parseInt(duration%60, 10);
@@ -61,6 +61,10 @@ $(document).ready(function() {
 
     pomodoroText.html(minutes + ":" + seconds );
     state.pauseDuration = duration;
+
+    indicatorbar = duration /state.workDuration * 100;
+    $(".progress-bar").css("width", indicatorbar + "%");
+    
   }
 
   function renderTracking() {
@@ -71,7 +75,7 @@ $(document).ready(function() {
       $(".timespent").html(`${hours} hr. ${minutes} mins.`);
     } else if(trackingSettings.timeSpentToday >= 120) {
       $(".timespent").html(`${hours} hrs. ${minutes} mins.`);
-    }else {
+    } else {
       $(".timespent").html(`${trackingSettings.timeSpentToday} mins.`);
     }
   }
