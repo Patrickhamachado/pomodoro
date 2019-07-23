@@ -6,6 +6,7 @@
   <link rel="import" href="elements/elements.html">
   <link href="css/bootstrap.min.css" rel="stylesheet">
   <link href="css/style.css" rel="stylesheet">
+  <!-- <style>body {    background-color: #333333; }</style>   -->
   <link href="favicon.ico" rel="icon" type="image/x-icon" />
   <script src="js/jq.js" type="text/javascript"></script>
   <script src="js/bootstrap.min.js" type="text/javascript"></script>
@@ -39,7 +40,18 @@
     <div class="row">
       <div class="col-md-12">
           <!-- Cronómetro -->
-        <h1 class="text-center pomodoro-text">&nbsp;</h1>
+        <h1 class="text-center pomodoro-text" "w-50">&nbsp;</h1>
+     </div>
+          <!-- progressbar -->
+    <div class="col-md-5">
+    </div>
+    <div class="col-md-2">
+        <div class="progress" style="height: 4px; ">
+             <div class="progress-bar progress-bar-success" role="progressbar" style="min-width: 2px;"></div>
+        </div>
+    </div>
+
+    <div class="col-md-12">
         <!-- Descripción del estado -->
         <h1 class="text-center text-success" id="indicator">-__-</h1>
         <!--  <h1 class="text-center text-success" id="pauseState">Pause ini</h1> -->
@@ -52,7 +64,7 @@
         <p>
         <strong>Today spent in focus:</strong> <span class="timespent">0 mins.</span>
         </p>
-        </div>
+    </div>
 
       </div >
     </div>

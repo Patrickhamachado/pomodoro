@@ -10,7 +10,7 @@
 .pomodoro-text {
   font-size: 6em;
   width: 250px;
-  height:  250px;
+  height:  210px;
   line-height: 300px;
   margin:  auto;
 }
@@ -40,7 +40,7 @@
   background: #2f4f4f;
 }
 
-@media screen and (max-device-width: 650px) 
+@media screen and (max-device-width: 650px)
 
   {
   a#start, a#stop {
@@ -108,10 +108,3 @@
 }
 
 }
-
-
-
-
-
-
-
