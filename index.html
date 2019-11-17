@@ -64,6 +64,7 @@
         <p>
         <strong>Today spent in focus:</strong> <span class="timespent">0 mins.</span>
         </p>
+
     </div>
 
       </div >
@@ -80,9 +81,17 @@
         <p class="col-md-3"><a href="#" id="stop" class="btn btn-danger btn-lg center-block">Stop</a></p>
          <!-- Botón de Next -->
         <p class="col-md-3"><a href="#" id="next" class="btn btn-info btn-lg center-block">Next</a></p>
-      </div>
+
+        <!-- Botón de notificacion a descansar
+       <p class="col-md-3"><a href="#" id="alerta" class="btn btn-info btn-lg center-block">Break</a></p>
+       <! Botón de notificacion a trabajar
+      <p class="col-md-3"><a href="#" id="hidealerta" class="btn btn-info btn-lg center-block">Time to work</a></p>
+      -->
+
+
     </div>
 
+    </div>
 
     <!-- Ventana Modal Settings -->
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="modalSettingsLabel">
@@ -131,6 +140,11 @@
                       <input id="soundMode" type="checkbox" checked> Sound
                     </label>
                   </div>
+                  <div class="checkbox">
+                    <label>
+                      <input id="notificationMode" type="checkbox" checked> Notification
+                    </label>
+                  </div>
                 </div>
               </div>
             </form>
@@ -152,9 +166,12 @@
         </div>
         <div class="modal-body">
           <a href="https://patrickhamachado.github.io/pomodoro/">https://patrickhamachado.github.io/pomodoro/</a>
-          <hr />
+      <hr/>
           Made by <a href="https://github.com/askeroff">Javid Askerov</a>. Contact him at <a href="mailto:askerovlab@gmail.com">askerovlab@gmail.com</a><br />
           Forked by <a href="https://github.com/Patrickhamachado">Patrick Machado</a>. Contact me at <a href="mailto:patrickhamachado@hotmail.com">patrickhamachado@hotmail.com</a>
+      <hr/>
+          Icons designed by <a href="https://www.flaticon.es/<?=_('authors/')?>freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.es/" title="Flaticon">www.flaticon.es</a>
+
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

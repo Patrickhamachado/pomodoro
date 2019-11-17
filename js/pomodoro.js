@@ -1,3 +1,9 @@
+
+Notification.requestPermission().then(function(result) {
+  console.log(result);
+});
+
+
 $(document).ready(function() {
 
   let state = JSON.parse(localStorage.getItem("settings"));
@@ -22,6 +28,7 @@ $(document).ready(function() {
       breakDuration: 5 * 60,
       continuousMode: false,
       soundMode: true,
+      notificationMode: true,
       workOn: false,
       longBreakDuration: 15 * 60,
       pauseDuration: 25 * 60,
@@ -34,14 +41,37 @@ $(document).ready(function() {
 
 
 
-  //const audio = new Audio('files/sound.mp3');
-  const audio = new Audio('files/kill_bill_-_whistle.mp3');
+  const audio = new Audio('files/sound.mp3');
+  //const audio = new Audio('files/kill_bill_-_whistle.mp3');
 
   let timerID = null;
 
   // grabbing DOM elements
   const pomodoroText = $(".pomodoro-text");
   const indicator =  $("#indicator");
+
+  // get permission to run notifications
+
+  Notification.requestPermission().then(function(result) {
+    console.log(result);
+  });
+
+  // spawn a Notification
+  function spawnNotification(theBody, theIcon, theTitle) {
+    var options = {
+      body: theBody,
+      icon: theIcon,
+      requireInteraction: true
+
+      // Next feature: Start the new timer from the Notification
+      // It has to be persistent, created with the showNotification() method:
+      //    https://notifications.spec.whatwg.org/#api
+      // Example: https://tests.peter.sh/notification-generator
+      //    Code: https://github.com/beverloo/peter.sh/blob/master/tests/notification-generator/index.html
+      //    <option data-id="3" value="Yes$$/resources/icons/11.png;;No$$/resources/icons/14.png">Two actions (LTR)</option>
+    }
+    var n = new Notification(theTitle, options);
+  }
 
   // rendering time in HTML page
 
@@ -64,7 +94,7 @@ $(document).ready(function() {
 
     indicatorbar = duration /state.workDuration * 100;
     $(".progress-bar").css("width", indicatorbar + "%");
-    
+
   }
 
   function renderTracking() {
@@ -125,8 +155,31 @@ $(document).ready(function() {
     okHandle();
   }
 
+  function notificationModeCheck( estado ) {
+      // function for send a notification
+      if( state.notificationMode == true ) {
+          if (estado == true) {
+              spawnNotification('You have worked hard, take a break', 'files/taza-de-cafe.png', 'Take a break');
+          }
+          else {
+              spawnNotification('It´s time to start working focused again', 'files/programador.png', 'Time to work');
+          }
+      }
+      // else {
+        //  spawnNotification('Notifications are NOT enabled', 'favicon.ico', 'Test');
+      //}
+  }
+
   function soundModeCheck() {
     return state.soundMode === true ? audio.play() : null;
+  }
+
+  function alertaHandle() {
+      notificationModeCheck(true);
+  }
+
+  function hidealertaHandle() {
+      notificationModeCheck(false);
   }
 
    function workTimer() {
@@ -164,15 +217,18 @@ $(document).ready(function() {
     timerID = setInterval(function() {
 
       renderTime(myTimer);
+      var trabajando = false;
 
       if(--myTimer < 0) {
         myTimer = duration;
         if(state.workOn == true) {
+            trabajando = true;
           updateTracking(state.workDuration);
           checkForTime();
         }
         reset( 0 );
         soundModeCheck();
+        notificationModeCheck(trabajando);
         continuousModeCheck();
         return;
       }
@@ -284,6 +340,7 @@ $(document).ready(function() {
       state.pomosToLongBreak = $("#pomosToLongBreak").val();
       state.continuousMode = $("#continuousMode").is(":checked");
       state.soundMode = $("#soundMode").is(":checked")
+      state.notificationMode = $("#notificationMode").is(":checked");
       if ( state.workOn == false ) {
           renderTime(state.workDuration);
       }
@@ -298,10 +355,17 @@ $(document).ready(function() {
   // Evento de pausa
   $("#pausa").click(pauseHandle);
 
+  // Evento Stop
   $("#stop").click(stopHandle);
 
   // Evento Next
   $("#next").click(nextHandle);
+
+  // Evento alerta
+  $("#alerta").click(alertaHandle);
+
+  // Evento hide alerta
+  $("#hidealerta").click(hidealertaHandle);
 
   $("#okButton").click(okHandle);
 
@@ -312,6 +376,7 @@ $(document).ready(function() {
     $("#pomosToLongBreak").val(state.pomosToLongBreak);
     $("#continuousMode").prop('checked', state.continuousMode);
     $("#soundMode").prop('checked', state.soundMode);
+    $("#notificationMode").prop('checked', state.notificationMode);
   });
 
   renderTime(state.workDuration);
